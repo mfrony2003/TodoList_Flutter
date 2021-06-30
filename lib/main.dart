@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:todolist_application/screen.dart';
+import 'package:todolist_application/widgets/Dialog.dart';
+import 'package:todolist_application/widgets/IconButton.dart';
+import 'package:todolist_application/screens/todoList.dart';
 
 final materialThemeData = ThemeData(
     primarySwatch: Colors.blue,
@@ -39,46 +41,44 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return PlatformScaffold(
         appBar: PlatformAppBar(
-          title: PlatformText('Review'),
-          leading: Icon(context.platformIcons.book),
+          title: PlatformText('Todo List'),
+          leading: Icon(context.platformIcons.home),
           trailingActions: <Widget>[
-            PlatformIconButton(
-              materialIcon: Icon(Icons.add),
-              cupertinoIcon: Icon(
-                CupertinoIcons.add,
-                size: 28.0,
-              ),
+            CustomIconButton(
+              onPress: () {
+                _custonDialog(context);
+              },
+              iconDataCupertino: CupertinoIcons.add,
+              iconDataMaterial: Icons.add,
             ),
-            PlatformIconButton(
-              materialIcon: Icon(Icons.info),
-              cupertinoIcon: Icon(
-                CupertinoIcons.info,
-                size: 28.0,
-              ),
+            CustomIconButton(
+              onPress: () => {},
+              iconDataCupertino: CupertinoIcons.info,
+              iconDataMaterial: Icons.info,
             ),
           ],
-          material: (_, __) => MaterialAppBarData(),
-          cupertino: (_, __) => CupertinoNavigationBarData(
-            transitionBetweenRoutes: false,
-            leading: PlatformButton(
-              padding: EdgeInsets.all(4.0),
-              child: Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
         ),
         body: Center(
-          child: Screen(),
+          //child: Screen(),
+          child: TodoList(),
         ));
+  }
+
+  Future<PlatformAlertDialog> _custonDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CustomDialog(
+              title: 'This is a test',
+              content: PlatformText('Hellow'),
+              platformACtionDialogList: [
+                PlatformDialogAction(
+                  child: PlatformText('Ok'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ]);
+        });
   }
 }

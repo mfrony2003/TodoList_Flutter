@@ -13,7 +13,6 @@ class CustomButtom extends StatelessWidget {
     return PlatformButton(
         onPressed: () => onAddClick(),
         material: (_, __) => MaterialRaisedButtonData(
-              color: Colors.blue,
               child: Icon(this.iconDataMatetial),
             ),
         cupertino: (_, __) => CupertinoButtonData(

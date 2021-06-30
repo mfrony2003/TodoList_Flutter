@@ -1,16 +1,15 @@
-# todolist_application
+# Todolist
 
-A new Flutter project.
+This project is for those who want to use same code base for both Android & IOS . Here i have user the libary   flutter_platform_widgets: ^1.9.5 . 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+  Below are the twi libary that have been used on this project
 
-A few resources to get you started if this is your first Flutter project:
+- [flutter_platform_widgets](https://pub.dev/packages/flutter_platform_widgets)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [Provider](https://pub.dev/packages/provider)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+This is a sample learning  project done to make the cross platform code by the [flutter_platform_widgets](https://pub.dev/packages/flutter_platform_widgets) library

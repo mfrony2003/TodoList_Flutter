@@ -1,25 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist_application/provider/themeProvider.dart';
+import 'package:todolist_application/theme/theme.dart';
+
 import 'package:todolist_application/widgets/Dialog.dart';
 import 'package:todolist_application/widgets/IconButton.dart';
 import 'package:todolist_application/screens/todoList.dart';
-
-final materialThemeData = ThemeData(
-    primarySwatch: Colors.blue,
-    scaffoldBackgroundColor: Colors.white,
-    accentColor: Colors.blue,
-    appBarTheme: AppBarTheme(color: Colors.blue.shade600),
-    primaryColor: Colors.blue,
-    secondaryHeaderColor: Colors.blue,
-    canvasColor: Colors.blue,
-    backgroundColor: Colors.red,
-    textTheme: TextTheme().copyWith(bodyText2: TextTheme().bodyText2));
-
-final cupertinoTheme = CupertinoThemeData(
-    primaryColor: Colors.blue,
-    barBackgroundColor: Colors.blue,
-    scaffoldBackgroundColor: Colors.white);
 
 void main() {
   runApp(MyApp());
@@ -27,34 +15,55 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ThemeProvier>(
+        create: (context) => ThemeProvier(), child: PlatformAPP()); //
+  }
+}
+
+class PlatformAPP extends StatelessWidget {
+  const PlatformAPP({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvier = context.watch<ThemeProvier>();
     return PlatformApp(
       debugShowCheckedModeBanner: false,
-      material: (_, __) => MaterialAppData(theme: materialThemeData),
+      material: (_, __) => MaterialAppData(
+          theme: materialThemeData,
+          darkTheme: ThemeData.dark(),
+          themeMode:
+              themeProvier.isDarkTheme() ? ThemeMode.dark : ThemeMode.light),
       cupertino: (_, __) => CupertinoAppData(theme: cupertinoTheme),
       home: MyHomePage(),
-    ); //
+    );
   }
 }
 
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvier = context.read<ThemeProvier>();
     return PlatformScaffold(
         appBar: PlatformAppBar(
-          title: PlatformText('Todo List'),
-          leading: Icon(context.platformIcons.home),
+          title: PlatformText("Todo List"),
+          leading: Icon(context.platformIcons.bookmark),
           trailingActions: <Widget>[
-            CustomIconButton(
-              onPress: () {
-                _custonDialog(context);
-              },
-              iconDataCupertino: CupertinoIcons.add,
-              iconDataMaterial: Icons.add,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: PlatformSwitch(
+                onChanged: (bool value) {
+                  themeProvier.onToogleTheme(value);
+                },
+                value: themeProvier.isDarkTheme(),
+              ),
             ),
             CustomIconButton(
-              onPress: () => {},
+              onPress: () => {_custonDialog(context)},
               iconDataCupertino: CupertinoIcons.info,
               iconDataMaterial: Icons.info,
             ),
@@ -71,11 +80,11 @@ class MyHomePage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return CustomDialog(
-              title: 'This is a test',
-              content: PlatformText('Hellow'),
+              title: 'Checking the library',
+              content: PlatformText('You Like it?'),
               platformACtionDialogList: [
                 PlatformDialogAction(
-                  child: PlatformText('Ok'),
+                  child: PlatformText('Yes'),
                   onPressed: () => Navigator.pop(context),
                 ),
               ]);

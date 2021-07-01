@@ -1,6 +1,7 @@
 # Todolist
 
-This project is for those who want to use same code base for both Android & IOS . Here i have user the libary   flutter_platform_widgets: ^1.9.5 . 
+This project is for learning purpose No gancy outlook.
+Focusing on developing the crospp platform app development good practice. Those who want to use same code base for both Android & IOS . Here i have user the libary   flutter_platform_widgets: ^1.9.5 . 
 
 ## Getting Started
 
